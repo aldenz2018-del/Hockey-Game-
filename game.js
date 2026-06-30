@@ -3,30 +3,40 @@ const ctx = canvas.getContext("2d");
 
 const W = canvas.width;
 const H = canvas.height;
-
 function drawRink() {
-  ctx.fillStyle = "#1b3b6f";
+  // Ice gradient
+  const ice = ctx.createLinearGradient(0, 0, 0, H);
+  ice.addColorStop(0, "#d8e9ff");
+  ice.addColorStop(1, "#bcd4f6");
+  ctx.fillStyle = ice;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 2;
+  // Outer border
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 6;
+  ctx.strokeRect(0, 0, W, H);
 
   // Center line
+  ctx.strokeStyle = "#ff4444";
+  ctx.lineWidth = 4;
   ctx.beginPath();
   ctx.moveTo(W / 2, 0);
   ctx.lineTo(W / 2, H);
   ctx.stroke();
 
   // Center circle
+  ctx.strokeStyle = "#0033aa";
+  ctx.lineWidth = 3;
   ctx.beginPath();
-  ctx.arc(W / 2, H / 2, 50, 0, Math.PI * 2);
+  ctx.arc(W / 2, H / 2, 60, 0, Math.PI * 2);
   ctx.stroke();
 
   // Goals
-  ctx.fillStyle = "#ff4444";
-  ctx.fillRect(0, H / 2 - 40, 10, 80);
-  ctx.fillRect(W - 10, H / 2 - 40, 10, 80);
+  ctx.fillStyle = "#ff0000";
+  ctx.fillRect(0, H / 2 - 40, 12, 80);
+  ctx.fillRect(W - 12, H / 2 - 40, 12, 80);
 }
+
 const puck = {
   x: W / 2,
   y: H / 2,
@@ -35,7 +45,7 @@ const puck = {
   vy: 2,
   friction: 0.99,
   bounce: 0.9,
-  maxSpeed: 12
+  maxSpeed: 10
 };
 
 function updatePuck() {
@@ -62,7 +72,7 @@ function updatePuck() {
 }
 
 function drawPuck() {
-  ctx.fillStyle = "white";
+  ctx.fillStyle = "black";
   ctx.beginPath();
   ctx.arc(puck.x, puck.y, puck.radius, 0, Math.PI * 2);
   ctx.fill();
